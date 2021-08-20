@@ -1,0 +1,1449 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "patient"
+  """
+  delete_patient(
+    """filter the rows which have to be deleted"""
+    where: patient_bool_exp!
+  ): patient_mutation_response
+
+  """
+  delete single row from the table: "patient"
+  """
+  delete_patient_by_pk(id: Int!): patient
+
+  """
+  delete data from the table: "vaccine_centers"
+  """
+  delete_vaccine_centers(
+    """filter the rows which have to be deleted"""
+    where: vaccine_centers_bool_exp!
+  ): vaccine_centers_mutation_response
+
+  """
+  delete single row from the table: "vaccine_centers"
+  """
+  delete_vaccine_centers_by_pk(id: Int!): vaccine_centers
+
+  """
+  delete data from the table: "vaccines"
+  """
+  delete_vaccines(
+    """filter the rows which have to be deleted"""
+    where: vaccines_bool_exp!
+  ): vaccines_mutation_response
+
+  """
+  delete single row from the table: "vaccines"
+  """
+  delete_vaccines_by_pk(id: Int!): vaccines
+
+  """
+  insert data into the table: "patient"
+  """
+  insert_patient(
+    """the rows to be inserted"""
+    objects: [patient_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: patient_on_conflict
+  ): patient_mutation_response
+
+  """
+  insert a single row into the table: "patient"
+  """
+  insert_patient_one(
+    """the row to be inserted"""
+    object: patient_insert_input!
+
+    """on conflict condition"""
+    on_conflict: patient_on_conflict
+  ): patient
+
+  """
+  insert data into the table: "vaccine_centers"
+  """
+  insert_vaccine_centers(
+    """the rows to be inserted"""
+    objects: [vaccine_centers_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: vaccine_centers_on_conflict
+  ): vaccine_centers_mutation_response
+
+  """
+  insert a single row into the table: "vaccine_centers"
+  """
+  insert_vaccine_centers_one(
+    """the row to be inserted"""
+    object: vaccine_centers_insert_input!
+
+    """on conflict condition"""
+    on_conflict: vaccine_centers_on_conflict
+  ): vaccine_centers
+
+  """
+  insert data into the table: "vaccines"
+  """
+  insert_vaccines(
+    """the rows to be inserted"""
+    objects: [vaccines_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: vaccines_on_conflict
+  ): vaccines_mutation_response
+
+  """
+  insert a single row into the table: "vaccines"
+  """
+  insert_vaccines_one(
+    """the row to be inserted"""
+    object: vaccines_insert_input!
+
+    """on conflict condition"""
+    on_conflict: vaccines_on_conflict
+  ): vaccines
+
+  """
+  update data of the table: "patient"
+  """
+  update_patient(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: patient_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: patient_set_input
+
+    """filter the rows which have to be updated"""
+    where: patient_bool_exp!
+  ): patient_mutation_response
+
+  """
+  update single row of the table: "patient"
+  """
+  update_patient_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: patient_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: patient_set_input
+    pk_columns: patient_pk_columns_input!
+  ): patient
+
+  """
+  update data of the table: "vaccine_centers"
+  """
+  update_vaccine_centers(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: vaccine_centers_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: vaccine_centers_set_input
+
+    """filter the rows which have to be updated"""
+    where: vaccine_centers_bool_exp!
+  ): vaccine_centers_mutation_response
+
+  """
+  update single row of the table: "vaccine_centers"
+  """
+  update_vaccine_centers_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: vaccine_centers_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: vaccine_centers_set_input
+    pk_columns: vaccine_centers_pk_columns_input!
+  ): vaccine_centers
+
+  """
+  update data of the table: "vaccines"
+  """
+  update_vaccines(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: vaccines_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: vaccines_set_input
+
+    """filter the rows which have to be updated"""
+    where: vaccines_bool_exp!
+  ): vaccines_mutation_response
+
+  """
+  update single row of the table: "vaccines"
+  """
+  update_vaccines_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: vaccines_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: vaccines_set_input
+    pk_columns: vaccines_pk_columns_input!
+  ): vaccines
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+"""
+columns and relationships of "patient"
+"""
+type patient {
+  alergic: Boolean!
+  created_at: timestamptz
+  first_name: String!
+  id: Int!
+  last_name: String!
+  updated_at: timestamptz
+  vaccination_centre: Int
+  vaccination_number: Int
+
+  """An object relationship"""
+  vaccine: vaccines
+
+  """An object relationship"""
+  vaccine_center: vaccine_centers
+  vaccine_type: Int
+}
+
+"""
+aggregated selection of "patient"
+"""
+type patient_aggregate {
+  aggregate: patient_aggregate_fields
+  nodes: [patient!]!
+}
+
+"""
+aggregate fields of "patient"
+"""
+type patient_aggregate_fields {
+  avg: patient_avg_fields
+  count(columns: [patient_select_column!], distinct: Boolean): Int!
+  max: patient_max_fields
+  min: patient_min_fields
+  stddev: patient_stddev_fields
+  stddev_pop: patient_stddev_pop_fields
+  stddev_samp: patient_stddev_samp_fields
+  sum: patient_sum_fields
+  var_pop: patient_var_pop_fields
+  var_samp: patient_var_samp_fields
+  variance: patient_variance_fields
+}
+
+"""
+order by aggregate values of table "patient"
+"""
+input patient_aggregate_order_by {
+  avg: patient_avg_order_by
+  count: order_by
+  max: patient_max_order_by
+  min: patient_min_order_by
+  stddev: patient_stddev_order_by
+  stddev_pop: patient_stddev_pop_order_by
+  stddev_samp: patient_stddev_samp_order_by
+  sum: patient_sum_order_by
+  var_pop: patient_var_pop_order_by
+  var_samp: patient_var_samp_order_by
+  variance: patient_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "patient"
+"""
+input patient_arr_rel_insert_input {
+  data: [patient_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: patient_on_conflict
+}
+
+"""aggregate avg on columns"""
+type patient_avg_fields {
+  id: Float
+  vaccination_centre: Float
+  vaccination_number: Float
+  vaccine_type: Float
+}
+
+"""
+order by avg() on columns of table "patient"
+"""
+input patient_avg_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "patient". All fields are combined with a logical 'AND'.
+"""
+input patient_bool_exp {
+  _and: [patient_bool_exp!]
+  _not: patient_bool_exp
+  _or: [patient_bool_exp!]
+  alergic: Boolean_comparison_exp
+  created_at: timestamptz_comparison_exp
+  first_name: String_comparison_exp
+  id: Int_comparison_exp
+  last_name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  vaccination_centre: Int_comparison_exp
+  vaccination_number: Int_comparison_exp
+  vaccine: vaccines_bool_exp
+  vaccine_center: vaccine_centers_bool_exp
+  vaccine_type: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "patient"
+"""
+enum patient_constraint {
+  """unique or primary key constraint"""
+  patient_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "patient"
+"""
+input patient_inc_input {
+  id: Int
+  vaccination_centre: Int
+  vaccination_number: Int
+  vaccine_type: Int
+}
+
+"""
+input type for inserting data into table "patient"
+"""
+input patient_insert_input {
+  alergic: Boolean
+  created_at: timestamptz
+  first_name: String
+  id: Int
+  last_name: String
+  updated_at: timestamptz
+  vaccination_centre: Int
+  vaccination_number: Int
+  vaccine: vaccines_obj_rel_insert_input
+  vaccine_center: vaccine_centers_obj_rel_insert_input
+  vaccine_type: Int
+}
+
+"""aggregate max on columns"""
+type patient_max_fields {
+  created_at: timestamptz
+  first_name: String
+  id: Int
+  last_name: String
+  updated_at: timestamptz
+  vaccination_centre: Int
+  vaccination_number: Int
+  vaccine_type: Int
+}
+
+"""
+order by max() on columns of table "patient"
+"""
+input patient_max_order_by {
+  created_at: order_by
+  first_name: order_by
+  id: order_by
+  last_name: order_by
+  updated_at: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""aggregate min on columns"""
+type patient_min_fields {
+  created_at: timestamptz
+  first_name: String
+  id: Int
+  last_name: String
+  updated_at: timestamptz
+  vaccination_centre: Int
+  vaccination_number: Int
+  vaccine_type: Int
+}
+
+"""
+order by min() on columns of table "patient"
+"""
+input patient_min_order_by {
+  created_at: order_by
+  first_name: order_by
+  id: order_by
+  last_name: order_by
+  updated_at: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""
+response of any mutation on the table "patient"
+"""
+type patient_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [patient!]!
+}
+
+"""
+on conflict condition type for table "patient"
+"""
+input patient_on_conflict {
+  constraint: patient_constraint!
+  update_columns: [patient_update_column!]! = []
+  where: patient_bool_exp
+}
+
+"""Ordering options when selecting data from "patient"."""
+input patient_order_by {
+  alergic: order_by
+  created_at: order_by
+  first_name: order_by
+  id: order_by
+  last_name: order_by
+  updated_at: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine: vaccines_order_by
+  vaccine_center: vaccine_centers_order_by
+  vaccine_type: order_by
+}
+
+"""primary key columns input for table: patient"""
+input patient_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "patient"
+"""
+enum patient_select_column {
+  """column name"""
+  alergic
+
+  """column name"""
+  created_at
+
+  """column name"""
+  first_name
+
+  """column name"""
+  id
+
+  """column name"""
+  last_name
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  vaccination_centre
+
+  """column name"""
+  vaccination_number
+
+  """column name"""
+  vaccine_type
+}
+
+"""
+input type for updating data in table "patient"
+"""
+input patient_set_input {
+  alergic: Boolean
+  created_at: timestamptz
+  first_name: String
+  id: Int
+  last_name: String
+  updated_at: timestamptz
+  vaccination_centre: Int
+  vaccination_number: Int
+  vaccine_type: Int
+}
+
+"""aggregate stddev on columns"""
+type patient_stddev_fields {
+  id: Float
+  vaccination_centre: Float
+  vaccination_number: Float
+  vaccine_type: Float
+}
+
+"""
+order by stddev() on columns of table "patient"
+"""
+input patient_stddev_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type patient_stddev_pop_fields {
+  id: Float
+  vaccination_centre: Float
+  vaccination_number: Float
+  vaccine_type: Float
+}
+
+"""
+order by stddev_pop() on columns of table "patient"
+"""
+input patient_stddev_pop_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type patient_stddev_samp_fields {
+  id: Float
+  vaccination_centre: Float
+  vaccination_number: Float
+  vaccine_type: Float
+}
+
+"""
+order by stddev_samp() on columns of table "patient"
+"""
+input patient_stddev_samp_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""aggregate sum on columns"""
+type patient_sum_fields {
+  id: Int
+  vaccination_centre: Int
+  vaccination_number: Int
+  vaccine_type: Int
+}
+
+"""
+order by sum() on columns of table "patient"
+"""
+input patient_sum_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""
+update columns of table "patient"
+"""
+enum patient_update_column {
+  """column name"""
+  alergic
+
+  """column name"""
+  created_at
+
+  """column name"""
+  first_name
+
+  """column name"""
+  id
+
+  """column name"""
+  last_name
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  vaccination_centre
+
+  """column name"""
+  vaccination_number
+
+  """column name"""
+  vaccine_type
+}
+
+"""aggregate var_pop on columns"""
+type patient_var_pop_fields {
+  id: Float
+  vaccination_centre: Float
+  vaccination_number: Float
+  vaccine_type: Float
+}
+
+"""
+order by var_pop() on columns of table "patient"
+"""
+input patient_var_pop_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""aggregate var_samp on columns"""
+type patient_var_samp_fields {
+  id: Float
+  vaccination_centre: Float
+  vaccination_number: Float
+  vaccine_type: Float
+}
+
+"""
+order by var_samp() on columns of table "patient"
+"""
+input patient_var_samp_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+"""aggregate variance on columns"""
+type patient_variance_fields {
+  id: Float
+  vaccination_centre: Float
+  vaccination_number: Float
+  vaccine_type: Float
+}
+
+"""
+order by variance() on columns of table "patient"
+"""
+input patient_variance_order_by {
+  id: order_by
+  vaccination_centre: order_by
+  vaccination_number: order_by
+  vaccine_type: order_by
+}
+
+type query_root {
+  """
+  fetch data from the table: "patient"
+  """
+  patient(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): [patient!]!
+
+  """
+  fetch aggregated fields from the table: "patient"
+  """
+  patient_aggregate(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): patient_aggregate!
+
+  """fetch data from the table: "patient" using primary key columns"""
+  patient_by_pk(id: Int!): patient
+
+  """
+  fetch data from the table: "vaccine_centers"
+  """
+  vaccine_centers(
+    """distinct select on columns"""
+    distinct_on: [vaccine_centers_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccine_centers_order_by!]
+
+    """filter the rows returned"""
+    where: vaccine_centers_bool_exp
+  ): [vaccine_centers!]!
+
+  """
+  fetch aggregated fields from the table: "vaccine_centers"
+  """
+  vaccine_centers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [vaccine_centers_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccine_centers_order_by!]
+
+    """filter the rows returned"""
+    where: vaccine_centers_bool_exp
+  ): vaccine_centers_aggregate!
+
+  """fetch data from the table: "vaccine_centers" using primary key columns"""
+  vaccine_centers_by_pk(id: Int!): vaccine_centers
+
+  """
+  fetch data from the table: "vaccines"
+  """
+  vaccines(
+    """distinct select on columns"""
+    distinct_on: [vaccines_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccines_order_by!]
+
+    """filter the rows returned"""
+    where: vaccines_bool_exp
+  ): [vaccines!]!
+
+  """
+  fetch aggregated fields from the table: "vaccines"
+  """
+  vaccines_aggregate(
+    """distinct select on columns"""
+    distinct_on: [vaccines_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccines_order_by!]
+
+    """filter the rows returned"""
+    where: vaccines_bool_exp
+  ): vaccines_aggregate!
+
+  """fetch data from the table: "vaccines" using primary key columns"""
+  vaccines_by_pk(id: Int!): vaccines
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "patient"
+  """
+  patient(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): [patient!]!
+
+  """
+  fetch aggregated fields from the table: "patient"
+  """
+  patient_aggregate(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): patient_aggregate!
+
+  """fetch data from the table: "patient" using primary key columns"""
+  patient_by_pk(id: Int!): patient
+
+  """
+  fetch data from the table: "vaccine_centers"
+  """
+  vaccine_centers(
+    """distinct select on columns"""
+    distinct_on: [vaccine_centers_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccine_centers_order_by!]
+
+    """filter the rows returned"""
+    where: vaccine_centers_bool_exp
+  ): [vaccine_centers!]!
+
+  """
+  fetch aggregated fields from the table: "vaccine_centers"
+  """
+  vaccine_centers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [vaccine_centers_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccine_centers_order_by!]
+
+    """filter the rows returned"""
+    where: vaccine_centers_bool_exp
+  ): vaccine_centers_aggregate!
+
+  """fetch data from the table: "vaccine_centers" using primary key columns"""
+  vaccine_centers_by_pk(id: Int!): vaccine_centers
+
+  """
+  fetch data from the table: "vaccines"
+  """
+  vaccines(
+    """distinct select on columns"""
+    distinct_on: [vaccines_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccines_order_by!]
+
+    """filter the rows returned"""
+    where: vaccines_bool_exp
+  ): [vaccines!]!
+
+  """
+  fetch aggregated fields from the table: "vaccines"
+  """
+  vaccines_aggregate(
+    """distinct select on columns"""
+    distinct_on: [vaccines_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [vaccines_order_by!]
+
+    """filter the rows returned"""
+    where: vaccines_bool_exp
+  ): vaccines_aggregate!
+
+  """fetch data from the table: "vaccines" using primary key columns"""
+  vaccines_by_pk(id: Int!): vaccines
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+columns and relationships of "vaccine_centers"
+"""
+type vaccine_centers {
+  available_doctors: Int!
+  id: Int!
+
+  """An array relationship"""
+  patients(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): [patient!]!
+
+  """An aggregate relationship"""
+  patients_aggregate(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): patient_aggregate!
+  vaccination_centre: String!
+  vaccines_count: Int!
+}
+
+"""
+aggregated selection of "vaccine_centers"
+"""
+type vaccine_centers_aggregate {
+  aggregate: vaccine_centers_aggregate_fields
+  nodes: [vaccine_centers!]!
+}
+
+"""
+aggregate fields of "vaccine_centers"
+"""
+type vaccine_centers_aggregate_fields {
+  avg: vaccine_centers_avg_fields
+  count(columns: [vaccine_centers_select_column!], distinct: Boolean): Int!
+  max: vaccine_centers_max_fields
+  min: vaccine_centers_min_fields
+  stddev: vaccine_centers_stddev_fields
+  stddev_pop: vaccine_centers_stddev_pop_fields
+  stddev_samp: vaccine_centers_stddev_samp_fields
+  sum: vaccine_centers_sum_fields
+  var_pop: vaccine_centers_var_pop_fields
+  var_samp: vaccine_centers_var_samp_fields
+  variance: vaccine_centers_variance_fields
+}
+
+"""aggregate avg on columns"""
+type vaccine_centers_avg_fields {
+  available_doctors: Float
+  id: Float
+  vaccines_count: Float
+}
+
+"""
+Boolean expression to filter rows from the table "vaccine_centers". All fields are combined with a logical 'AND'.
+"""
+input vaccine_centers_bool_exp {
+  _and: [vaccine_centers_bool_exp!]
+  _not: vaccine_centers_bool_exp
+  _or: [vaccine_centers_bool_exp!]
+  available_doctors: Int_comparison_exp
+  id: Int_comparison_exp
+  patients: patient_bool_exp
+  vaccination_centre: String_comparison_exp
+  vaccines_count: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "vaccine_centers"
+"""
+enum vaccine_centers_constraint {
+  """unique or primary key constraint"""
+  waiting_entry_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "vaccine_centers"
+"""
+input vaccine_centers_inc_input {
+  available_doctors: Int
+  id: Int
+  vaccines_count: Int
+}
+
+"""
+input type for inserting data into table "vaccine_centers"
+"""
+input vaccine_centers_insert_input {
+  available_doctors: Int
+  id: Int
+  patients: patient_arr_rel_insert_input
+  vaccination_centre: String
+  vaccines_count: Int
+}
+
+"""aggregate max on columns"""
+type vaccine_centers_max_fields {
+  available_doctors: Int
+  id: Int
+  vaccination_centre: String
+  vaccines_count: Int
+}
+
+"""aggregate min on columns"""
+type vaccine_centers_min_fields {
+  available_doctors: Int
+  id: Int
+  vaccination_centre: String
+  vaccines_count: Int
+}
+
+"""
+response of any mutation on the table "vaccine_centers"
+"""
+type vaccine_centers_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [vaccine_centers!]!
+}
+
+"""
+input type for inserting object relation for remote table "vaccine_centers"
+"""
+input vaccine_centers_obj_rel_insert_input {
+  data: vaccine_centers_insert_input!
+
+  """on conflict condition"""
+  on_conflict: vaccine_centers_on_conflict
+}
+
+"""
+on conflict condition type for table "vaccine_centers"
+"""
+input vaccine_centers_on_conflict {
+  constraint: vaccine_centers_constraint!
+  update_columns: [vaccine_centers_update_column!]! = []
+  where: vaccine_centers_bool_exp
+}
+
+"""Ordering options when selecting data from "vaccine_centers"."""
+input vaccine_centers_order_by {
+  available_doctors: order_by
+  id: order_by
+  patients_aggregate: patient_aggregate_order_by
+  vaccination_centre: order_by
+  vaccines_count: order_by
+}
+
+"""primary key columns input for table: vaccine_centers"""
+input vaccine_centers_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "vaccine_centers"
+"""
+enum vaccine_centers_select_column {
+  """column name"""
+  available_doctors
+
+  """column name"""
+  id
+
+  """column name"""
+  vaccination_centre
+
+  """column name"""
+  vaccines_count
+}
+
+"""
+input type for updating data in table "vaccine_centers"
+"""
+input vaccine_centers_set_input {
+  available_doctors: Int
+  id: Int
+  vaccination_centre: String
+  vaccines_count: Int
+}
+
+"""aggregate stddev on columns"""
+type vaccine_centers_stddev_fields {
+  available_doctors: Float
+  id: Float
+  vaccines_count: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type vaccine_centers_stddev_pop_fields {
+  available_doctors: Float
+  id: Float
+  vaccines_count: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type vaccine_centers_stddev_samp_fields {
+  available_doctors: Float
+  id: Float
+  vaccines_count: Float
+}
+
+"""aggregate sum on columns"""
+type vaccine_centers_sum_fields {
+  available_doctors: Int
+  id: Int
+  vaccines_count: Int
+}
+
+"""
+update columns of table "vaccine_centers"
+"""
+enum vaccine_centers_update_column {
+  """column name"""
+  available_doctors
+
+  """column name"""
+  id
+
+  """column name"""
+  vaccination_centre
+
+  """column name"""
+  vaccines_count
+}
+
+"""aggregate var_pop on columns"""
+type vaccine_centers_var_pop_fields {
+  available_doctors: Float
+  id: Float
+  vaccines_count: Float
+}
+
+"""aggregate var_samp on columns"""
+type vaccine_centers_var_samp_fields {
+  available_doctors: Float
+  id: Float
+  vaccines_count: Float
+}
+
+"""aggregate variance on columns"""
+type vaccine_centers_variance_fields {
+  available_doctors: Float
+  id: Float
+  vaccines_count: Float
+}
+
+"""
+columns and relationships of "vaccines"
+"""
+type vaccines {
+  id: Int!
+
+  """An array relationship"""
+  patients(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): [patient!]!
+
+  """An aggregate relationship"""
+  patients_aggregate(
+    """distinct select on columns"""
+    distinct_on: [patient_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [patient_order_by!]
+
+    """filter the rows returned"""
+    where: patient_bool_exp
+  ): patient_aggregate!
+  vaccine_name: String!
+  vaccine_type: String!
+}
+
+"""
+aggregated selection of "vaccines"
+"""
+type vaccines_aggregate {
+  aggregate: vaccines_aggregate_fields
+  nodes: [vaccines!]!
+}
+
+"""
+aggregate fields of "vaccines"
+"""
+type vaccines_aggregate_fields {
+  avg: vaccines_avg_fields
+  count(columns: [vaccines_select_column!], distinct: Boolean): Int!
+  max: vaccines_max_fields
+  min: vaccines_min_fields
+  stddev: vaccines_stddev_fields
+  stddev_pop: vaccines_stddev_pop_fields
+  stddev_samp: vaccines_stddev_samp_fields
+  sum: vaccines_sum_fields
+  var_pop: vaccines_var_pop_fields
+  var_samp: vaccines_var_samp_fields
+  variance: vaccines_variance_fields
+}
+
+"""aggregate avg on columns"""
+type vaccines_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "vaccines". All fields are combined with a logical 'AND'.
+"""
+input vaccines_bool_exp {
+  _and: [vaccines_bool_exp!]
+  _not: vaccines_bool_exp
+  _or: [vaccines_bool_exp!]
+  id: Int_comparison_exp
+  patients: patient_bool_exp
+  vaccine_name: String_comparison_exp
+  vaccine_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "vaccines"
+"""
+enum vaccines_constraint {
+  """unique or primary key constraint"""
+  vaccines_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "vaccines"
+"""
+input vaccines_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "vaccines"
+"""
+input vaccines_insert_input {
+  id: Int
+  patients: patient_arr_rel_insert_input
+  vaccine_name: String
+  vaccine_type: String
+}
+
+"""aggregate max on columns"""
+type vaccines_max_fields {
+  id: Int
+  vaccine_name: String
+  vaccine_type: String
+}
+
+"""aggregate min on columns"""
+type vaccines_min_fields {
+  id: Int
+  vaccine_name: String
+  vaccine_type: String
+}
+
+"""
+response of any mutation on the table "vaccines"
+"""
+type vaccines_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [vaccines!]!
+}
+
+"""
+input type for inserting object relation for remote table "vaccines"
+"""
+input vaccines_obj_rel_insert_input {
+  data: vaccines_insert_input!
+
+  """on conflict condition"""
+  on_conflict: vaccines_on_conflict
+}
+
+"""
+on conflict condition type for table "vaccines"
+"""
+input vaccines_on_conflict {
+  constraint: vaccines_constraint!
+  update_columns: [vaccines_update_column!]! = []
+  where: vaccines_bool_exp
+}
+
+"""Ordering options when selecting data from "vaccines"."""
+input vaccines_order_by {
+  id: order_by
+  patients_aggregate: patient_aggregate_order_by
+  vaccine_name: order_by
+  vaccine_type: order_by
+}
+
+"""primary key columns input for table: vaccines"""
+input vaccines_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "vaccines"
+"""
+enum vaccines_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  vaccine_name
+
+  """column name"""
+  vaccine_type
+}
+
+"""
+input type for updating data in table "vaccines"
+"""
+input vaccines_set_input {
+  id: Int
+  vaccine_name: String
+  vaccine_type: String
+}
+
+"""aggregate stddev on columns"""
+type vaccines_stddev_fields {
+  id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type vaccines_stddev_pop_fields {
+  id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type vaccines_stddev_samp_fields {
+  id: Float
+}
+
+"""aggregate sum on columns"""
+type vaccines_sum_fields {
+  id: Int
+}
+
+"""
+update columns of table "vaccines"
+"""
+enum vaccines_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  vaccine_name
+
+  """column name"""
+  vaccine_type
+}
+
+"""aggregate var_pop on columns"""
+type vaccines_var_pop_fields {
+  id: Float
+}
+
+"""aggregate var_samp on columns"""
+type vaccines_var_samp_fields {
+  id: Float
+}
+
+"""aggregate variance on columns"""
+type vaccines_variance_fields {
+  id: Float
+}
