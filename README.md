@@ -10,6 +10,11 @@ yarn install
 yarn serve
 ```
 
+### SSR only without HMR
+```
+yarn ssr
+```
+
 ### Compiles and minifies for production
 ```
 yarn build

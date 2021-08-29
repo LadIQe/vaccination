@@ -1,11 +1,19 @@
 <template>
   <div id="nav">
-    <router-link :to="AllRoutesEnum.VACCINE_CENTER_LIST">
-      Vakcinacne centra
-    </router-link>
-    <router-link :to="AllRoutesEnum.PATIENT_LIST">
-      Zoznam pacientov
-    </router-link>
+    <div class="logo">
+      <router-link :to="AllRoutesEnum.HOME">
+        LOGO
+      </router-link>
+    </div>
+
+    <div class="navigation">
+      <router-link :to="AllRoutesEnum.VACCINE_CENTER_LIST">
+        Vakcinacne centra
+      </router-link>
+      <router-link :to="AllRoutesEnum.PATIENT_LIST">
+        Zoznam pacientov
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -28,22 +36,40 @@ export default defineComponent({
   position: fixed;
   width: 100vw;
   border-bottom: 2px solid lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  a {
+  .logo {
+    position: absolute;
+    left: 50px;
     font-weight: bold;
-    color: #2c3e50;
-    font-size: 16px;
-    padding: 15px 40px;
-    display: inline-block;
-    transition: 0.25s ease;
+    font-size: 26px;
 
-    &.router-link-exact-active {
-      color: #42b983;
+    a {
+      text-decoration: none;
+      color: black;
     }
+  }
 
-    &:hover {
-      background: lighten($color: lightgrey, $amount: 10%);
-      border-radius: 5px;
+  .navigation {
+    a {
+      font-weight: bold;
+      color: #2c3e50;
+      font-size: 16px;
+      padding: 15px 40px;
+      display: inline-block;
+      transition: 0.25s ease;
+      text-decoration: none;
+
+      &.router-link-exact-active {
+        color: #42b983;
+      }
+
+      &:hover {
+        background: lighten($color: lightgrey, $amount: 10%);
+        border-radius: 5px;
+      }
     }
   }
 }
