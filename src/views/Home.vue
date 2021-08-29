@@ -1,49 +1,26 @@
 <template>
   <div class="home">
-    <img
-      alt="Vue logo"
-      src="../assets/logo.png"
-    >
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <h1>Vitajte na strankach Statneho nemocnicneho systemu pre registrovanie obcanov na vakcinaciu proti COVID-19 a.k.a Sars-Cov-2</h1>
+
+    <div class="description">
+      <p>Na stranke najdete kopec uzitocnych info ohladom vakcinacii a ako sa chranit pred covidom (ak ich najedete).</p>
+
+      <p>Hore na stranke su umiestnene dolezite linky, ktore Vas nasmeruju kde treba (ak viete, co chcete).</p>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, onServerPrefetch } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
-import { useStore } from '@/store'
-import { PatientActionTypes } from '@/store/modules/patient/PatientStoreTypes'
+<style lang="scss" scoped>
+.home {
+  text-align: center;
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld
-  },
-  setup () {
-    const store = useStore()
+  .description {
+    margin-top: 100px;
 
-    onServerPrefetch(async () => {
-      // await store.dispatch(PatientActionTypes.FETCH_PATIENTS)
-    })
-
-    onMounted(() => {
-      const query = {
-        query: `
-          query {
-            patient(distinct_on: []) {
-              alergic
-              created_at
-              first_name
-              id
-              last_name
-              updated_at
-              vaccination_centre
-              vaccination_number
-            }
-          }`
-      }
-      store.dispatch(PatientActionTypes.FETCH_PATIENTS, query)
-    })
+    p {
+      font-size: 20px;
+    }
   }
-})
-</script>
+}
+
+</style>

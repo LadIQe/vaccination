@@ -1,5 +1,6 @@
 import { ApiPostTypes } from 'src/types/API/ApiRouteTypes'
 import axios, { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios'
+import { Responses } from '@/types/API/ResponseTypes'
 
 class ApiClient {
   private instance: AxiosInstance;
@@ -41,11 +42,11 @@ class ApiClient {
     )
   }
 
-  public post<T extends ApiPostTypes> (
-    baseUrl: T['url'],
-    data: T['request'],
+  public post<T extends Responses> (
+    baseUrl: ApiPostTypes<T>['url'],
+    data: ApiPostTypes<T>['request'],
     config?: AxiosRequestConfig
-  ): AxiosPromise<T['response']> {
+  ): AxiosPromise<ApiPostTypes<T>['response']> {
     return this.instance.post(baseUrl, data, config).catch((e: AxiosError) => {
       throw e
     })

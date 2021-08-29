@@ -4,7 +4,7 @@ const { optimize } = require('webpack')
 
 exports.chainWebpack = (webpackConfig) => {
   // We need to disable cache loader, otherwise the client build
-  // will used cached components from the server build
+  // will use cached components from the server build
   webpackConfig.module.rule('vue').uses.delete('cache-loader')
   webpackConfig.module.rule('js').uses.delete('cache-loader')
   webpackConfig.module.rule('ts').uses.delete('cache-loader')

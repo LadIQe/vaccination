@@ -23,7 +23,6 @@ server.get('*', async (req, res) => {
   const { app, store } = await createApp(req.url)
 
   const appContent = await renderToString(app)
-  console.log(store.state)
   const renderState = `
     <script>
       window.INITIAL_STORE = ${serialize(store.state)}

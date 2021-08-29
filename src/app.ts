@@ -2,6 +2,7 @@ import { createApp, createSSRApp, h } from 'vue'
 import { store, storeKey } from './store'
 
 import App from './App.vue'
+import Modal from '@/components/common/Modal.vue'
 import router from './router'
 
 export default function () {
@@ -14,6 +15,8 @@ export default function () {
 
   app.use(router)
   app.use(store, storeKey)
+
+  app.component('Modal', Modal)
 
   return {
     app,

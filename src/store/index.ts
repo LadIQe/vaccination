@@ -6,10 +6,13 @@ import {
   useStore as baseUseStore
 } from 'vuex'
 import patient from './modules/patient'
-import { PatientState } from './modules/patient/patientState'
+import vaccine from './modules/vaccine'
+import { PatientState } from './modules/patient/state'
+import { VaccineState } from './modules/vaccine/state'
 
 export type RootState = {
-  patient: PatientState
+  patient: PatientState,
+  vaccine: VaccineState
 }
 
 // provide typings for `useStore` helper
@@ -17,7 +20,8 @@ export const storeKey: InjectionKey<VuexStore<RootState>> = Symbol('vuex-key')
 
 export const store = createStore<RootState>({
   modules: {
-    patient
+    patient,
+    vaccine
   },
 
   devtools: true,

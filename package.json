@@ -7,8 +7,9 @@
     "build:client": "vue-cli-service build --dest dist/client",
     "build:server": "SSR=1 vue-cli-service build --dest dist/server",
     "build": "yarn run build:client && yarn run build:server",
+    "build:dev": "yarn run build:client && yarn run build:server",
     "lint": "vue-cli-service lint",
-    "ssr:run": "yarn run build && node server.js"
+    "ssr": "yarn run build:dev && node server.js"
   },
   "dependencies": {
     "@vue/server-renderer": "^3.2.4",
